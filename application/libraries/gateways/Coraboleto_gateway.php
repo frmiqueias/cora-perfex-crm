@@ -12,6 +12,9 @@ class Coraboleto_gateway extends App_gateway
         $this->urlBase = 'https://pay.divox.com.br/';
         $this->urlApi = $this->urlBase . 'api/cora/';
 
+        if (isset($_GET['error_cora']) && $_GET['error_cora'] == 'license_key')
+            set_alert('danger', 'Licença inválida');
+
         /**
          * Call App_gateway __construct function
          */
