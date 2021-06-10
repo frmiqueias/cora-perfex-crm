@@ -4,11 +4,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Coraboleto extends App_Controller
 {
+
     public function callback()
     {
         $invoiceId = $this->input->get('invoiceid');
         $hash = $this->input->get('hash');
-        $coraId = $this->input->request_headers()['webhook-resource-id'];
+        $coraId = isset($this->input->request_headers()['webhook-resource-id']) ? $this->input->request_headers()['webhook-resource-id'] : null;
+
+        if (!$invoiceId || !$hash || !$coraId)
+            show_error('Requisição inválida.');
 
         check_invoice_restrictions($invoiceId, $hash);
 
